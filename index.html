@@ -1,35 +1,209 @@
-<!DOCTYPE html>
+<!doctype html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Club de lectura</title>
-    <link rel="stylesheet" href="styles.css">
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Club de lectura</title>
+
+  <style>
+    *{box-sizing:border-box}
+    body{margin:0;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial;background:#0c0c0c;color:#fff}
+    .wrap{max-width:1200px;margin:0 auto;padding:28px 18px}
+    header{display:flex;justify-content:space-between;align-items:end;gap:16px;margin-bottom:18px}
+    h1{margin:0;font-weight:600;font-size:20px;letter-spacing:.3px}
+    .meta{opacity:.7;font-size:13px}
+    .grid{
+      display:grid;
+      grid-template-columns:repeat(auto-fit,minmax(220px,1fr));
+      gap:14px;
+      margin-top:18px
+    }
+    .card{
+      position:relative; overflow:hidden; border-radius:14px;
+      background:#111; border:1px solid rgba(255,255,255,.08);
+      aspect-ratio: 4 / 3;
+      cursor:pointer;
+    }
+    .card img{
+      width:100%;height:100%;object-fit:cover;display:block;
+      transform:scale(1.02);
+      transition:transform .25s ease, opacity .25s ease;
+      opacity:.95
+    }
+    .card:hover img{transform:scale(1.06);opacity:1}
+    .btn{
+      border:1px solid rgba(255,255,255,.16);
+      padding:10px 12px;border-radius:12px;
+      background:rgba(255,255,255,.06); color:#fff;
+      text-decoration:none; font-size:13px;
+    }
+    .btn:hover{background:rgba(255,255,255,.10)}
+    .lb{
+      position:fixed; inset:0; display:none;
+      background:rgba(0,0,0,.86);
+      align-items:center; justify-content:center;
+      padding:18px; z-index:9999;
+    }
+    .lb.open{display:flex}
+    .lb-inner{max-width:min(1200px, 96vw); max-height:92vh; width:100%}
+    .lb-img{
+      width:100%;height:auto;max-height:92vh;object-fit:contain;
+      border-radius:14px;border:1px solid rgba(255,255,255,.10);
+      background:#000;
+    }
+    .lb-ui{
+      display:flex;justify-content:space-between;align-items:center;
+      margin-top:10px; gap:10px; opacity:.9; font-size:13px
+    }
+    .lb-actions{display:flex;gap:8px}
+    .iconbtn{
+      border:1px solid rgba(255,255,255,.16);
+      background:rgba(255,255,255,.06);
+      color:#fff; padding:10px 12px; border-radius:12px;
+      cursor:pointer;
+    }
+    .iconbtn:hover{background:rgba(255,255,255,.10)}
+    .hint{opacity:.6}
+  </style>
 </head>
+
 <body>
+  <div class="wrap">
     <header>
-        <div class="header-content">
-            <div class="title-section">
-                <h1>Club de lectura</h1>
-                <p>Seleccioná una foto para verla grande · Flechas para navegar</p>
-            </div>
-            <a href="#" class="back-btn">Volver</a>
-        </div>
+      <div>
+        <h1>Club de lectura</h1>
+        <div class="meta">Seleccioná una foto para verla grande · Flechas para navegar</div>
+      </div>
+      <a class="btn" href="/" title="Volver a la web">Volver</a>
     </header>
 
-    <main id="gallery" class="gallery">
-        <!-- Las imágenes se cargan automáticamente aquí -->
-    </main>
+    <section class="grid" id="grid">
+      <div class="card"><img src="fotos/club-lectura/01.jpg" alt="01" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/02.jpg" alt="02" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/03.jpg" alt="03" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/04.jpg" alt="04" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/05.jpg" alt="05" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/06.jpg" alt="06" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/07.jpg" alt="07" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/08.jpg" alt="08" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/09.jpg" alt="09" loading="lazy"></div>
 
-    <!-- Lightbox -->
-    <div id="lightbox" class="lightbox">
-        <span class="close">&times;</span>
-        <img class="lightbox-content" id="lightbox-img">
-        <div class="caption" id="caption"></div>
-        <button class="nav-btn prev" onclick="changeImage(-1)">&#10094;</button>
-        <button class="nav-btn next" onclick="changeImage(1)">&#10095;</button>
+      <div class="card"><img src="fotos/club-lectura/010.jpg" alt="10" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/011.jpg" alt="11" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/012.jpg" alt="12" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/013.jpg" alt="13" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/014.jpg" alt="14" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/015.jpg" alt="15" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/016.jpg" alt="16" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/017.jpg" alt="17" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/018.jpg" alt="18" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/019.jpg" alt="19" loading="lazy"></div>
+
+      <div class="card"><img src="fotos/club-lectura/020.jpg" alt="20" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/021.jpg" alt="21" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/022.jpg" alt="22" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/023.jpg" alt="23" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/024.jpg" alt="24" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/025.jpg" alt="25" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/026.jpg" alt="26" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/027.jpg" alt="27" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/028.jpg" alt="28" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/029.jpg" alt="29" loading="lazy"></div>
+
+      <div class="card"><img src="fotos/club-lectura/030.jpg" alt="30" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/031.jpg" alt="31" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/032.jpg" alt="32" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/033.jpg" alt="33" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/034.jpg" alt="34" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/035.jpg" alt="35" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/036.jpg" alt="36" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/037.jpg" alt="37" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/038.jpg" alt="38" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/039.jpg" alt="39" loading="lazy"></div>
+
+      <div class="card"><img src="fotos/club-lectura/040.jpg" alt="40" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/041.jpg" alt="41" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/042.jpg" alt="42" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/043.jpg" alt="43" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/044.jpg" alt="44" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/045.jpg" alt="45" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/046.jpg" alt="46" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/047.jpg" alt="47" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/048.jpg" alt="48" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/049.jpg" alt="49" loading="lazy"></div>
+
+      <div class="card"><img src="fotos/club-lectura/050.jpg" alt="50" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/051.jpg" alt="51" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/052.jpg" alt="52" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/053.jpg" alt="53" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/054.jpg" alt="54" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/055.jpg" alt="55" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/056.jpg" alt="56" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/057.jpg" alt="57" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/058.jpg" alt="58" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/059.jpg" alt="59" loading="lazy"></div>
+
+      <div class="card"><img src="fotos/club-lectura/060.jpg" alt="60" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/061.jpg" alt="61" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/062.jpg" alt="62" loading="lazy"></div>
+      <div class="card"><img src="fotos/club-lectura/063.jpg" alt="63" loading="lazy"></div>
+    </section>
+
+  </div>
+
+  <div class="lb" id="lb" aria-hidden="true">
+    <div class="lb-inner">
+      <img class="lb-img" id="lbImg" src="" alt="Foto ampliada">
+      <div class="lb-ui">
+        <div id="lbCount" class="hint"></div>
+        <div class="lb-actions">
+          <button class="iconbtn" id="prev" type="button">←</button>
+          <button class="iconbtn" id="next" type="button">→</button>
+          <button class="iconbtn" id="close" type="button">Cerrar</button>
+        </div>
+      </div>
     </div>
+  </div>
 
-    <script src="script.js"></script>
+  <script>
+    const cards = Array.from(document.querySelectorAll('#grid img'));
+    const lb = document.getElementById('lb');
+    const lbImg = document.getElementById('lbImg');
+    const lbCount = document.getElementById('lbCount');
+    const btnPrev = document.getElementById('prev');
+    const btnNext = document.getElementById('next');
+    const btnClose = document.getElementById('close');
+
+    let i = 0;
+
+    function openAt(idx){
+      i = idx;
+      lbImg.src = cards[i].src;
+      lbCount.textContent = (i+1) + ' / ' + cards.length;
+      lb.classList.add('open');
+      lb.setAttribute('aria-hidden','false');
+    }
+    function close(){
+      lb.classList.remove('open');
+      lb.setAttribute('aria-hidden','true');
+      lbImg.src = '';
+    }
+    function prev(){ openAt((i - 1 + cards.length) % cards.length); }
+    function next(){ openAt((i + 1) % cards.length); }
+
+    cards.forEach((img, idx) => img.parentElement.addEventListener('click', () => openAt(idx)));
+    btnPrev.addEventListener('click', prev);
+    btnNext.addEventListener('click', next);
+    btnClose.addEventListener('click', close);
+
+    lb.addEventListener('click', (e) => { if(e.target === lb) close(); });
+
+    document.addEventListener('keydown', (e) => {
+      if(!lb.classList.contains('open')) return;
+      if(e.key === 'Escape') close();
+      if(e.key === 'ArrowLeft') prev();
+      if(e.key === 'ArrowRight') next();
+    });
+  </script>
 </body>
 </html>
