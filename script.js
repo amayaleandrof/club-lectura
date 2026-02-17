@@ -1,4 +1,3 @@
-// Configuración
 const imageFiles = [];
 for (let i = 1; i <= 99; i++) {
     imageFiles.push(i.toString().padStart(2, '0'));
@@ -7,15 +6,12 @@ for (let i = 1; i <= 99; i++) {
 let currentImageIndex = 0;
 let loadedImages = [];
 
-// Detectar imágenes - versión mejorada para GitHub Pages
 async function detectImages() {
     const gallery = document.getElementById('gallery');
     const extensions = ['jpg', 'jpeg', 'png', 'webp'];
     
-    // Limpiar mensaje de carga
-    gallery.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 2rem; color: #888;">Cargando imágenes...</div>';
+    gallery.innerHTML = '<div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">Cargando imágenes...</div>';
     
-    // Intentar cargar cada imagen
     for (let file of imageFiles) {
         for (let ext of extensions) {
             const src = `./images/${file}.${ext}`;
@@ -25,51 +21,36 @@ async function detectImages() {
                 if (exists) {
                     loadedImages.push({
                         src: src,
-                        name: `${file}.${ext}`
+                        name: `${file}.${ext}`,
+                        number: parseInt(file)
                     });
-                    console.log(`✓ Cargada: ${src}`);
                 }
-            } catch(e) {
-                // Imagen no existe, continuar
-            }
+            } catch(e) {}
         }
     }
     
-    // Si no se encontraron imágenes
     if (loadedImages.length === 0) {
         gallery.innerHTML = `
-            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #888;">
-                <h3>No se encontraron imágenes</h3>
-                <p>Verificá que tus fotos estén en la carpeta <code>images/</code></p>
-                <p style="margin-top: 1rem; font-size: 0.9rem;">
-                    Formatos soportados: 01.jpg, 02.png, etc.
-                </p>
+            <div style="grid-column: 1/-1; text-align: center; padding: 3rem; color: #666;">
+                <p>No se encontraron imágenes en la carpeta images/</p>
             </div>
         `;
         return;
     }
     
-    // Ordenar numéricamente
-    loadedImages.sort((a, b) => {
-        const numA = parseInt(a.name.match(/\d+/)[0]);
-        const numB = parseInt(b.name.match(/\d+/)[0]);
-        return numA - numB;
-    });
+    // Orden numérico correcto: 01, 02, 03... 10, 11...
+    loadedImages.sort((a, b) => a.number - b.number);
     
-    console.log(`Total imágenes cargadas: ${loadedImages.length}`);
     renderGallery();
 }
 
-// Función para verificar si una imagen existe
 function checkImage(src) {
     return new Promise((resolve) => {
         const img = new Image();
         img.onload = () => resolve(true);
         img.onerror = () => resolve(false);
         img.src = src;
-        
-        // Timeout de 2 segundos
-        setTimeout(() => resolve(false), 2000);
+        setTimeout(() => resolve(false), 1000);
     });
 }
 
@@ -91,16 +72,11 @@ function renderGallery() {
             item.classList.remove('loading');
         };
         
-        img.onerror = () => {
-            console.error(`Error cargando: ${image.src}`);
-        };
-        
         item.appendChild(img);
         gallery.appendChild(item);
     });
 }
 
-// Lightbox functions
 function openLightbox(index) {
     currentImageIndex = index;
     const lightbox = document.getElementById('lightbox');
@@ -109,7 +85,7 @@ function openLightbox(index) {
     
     lightbox.style.display = 'block';
     lightboxImg.src = loadedImages[index].src;
-    caption.textContent = `${index + 1} / ${loadedImages.length} - ${loadedImages[index].name}`;
+    caption.textContent = `${index + 1} / ${loadedImages.length}`;
     
     document.body.style.overflow = 'hidden';
 }
@@ -135,12 +111,11 @@ function changeImage(direction) {
     lightboxImg.style.opacity = '0.5';
     setTimeout(() => {
         lightboxImg.src = loadedImages[currentImageIndex].src;
-        caption.textContent = `${currentImageIndex + 1} / ${loadedImages.length} - ${loadedImages[currentImageIndex].name}`;
+        caption.textContent = `${currentImageIndex + 1} / ${loadedImages.length}`;
         lightboxImg.style.opacity = '1';
-    }, 200);
+    }, 150);
 }
 
-// Event listeners
 document.querySelector('.close').onclick = closeLightbox;
 
 document.getElementById('lightbox').onclick = (e) => {
@@ -156,5 +131,4 @@ document.addEventListener('keydown', (e) => {
     }
 });
 
-// Iniciar
 window.addEventListener('DOMContentLoaded', detectImages);
